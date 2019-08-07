@@ -1,17 +1,28 @@
 require('minitest/autorun')
 require('minitest/rg')
-require_relative('../customers')
+require_relative('../customer')
+require_relative('../drink')
 
-class TestCustomers < MiniTest::Test
+class TestCustomer < MiniTest::Test
   def setup
-    @customers = Customers.new('john', 50)
+    @customer = Customer.new('john', 50, 18)
+    @drink = Drink.new('whisky', 4.99)
   end
 
   def test_customer_name
-    assert_equal('john', @customers.name())
+    assert_equal('john', @customer.name())
   end
 
   def test_customer_wallet_balance
-    assert_equal(50, @customers.wallet())
+    assert_equal(50, @customer.wallet())
+  end
+
+  def test_customer_pay_for_drink
+    @customer.pay_for_drink(@drink.price)
+    assert_equal(45.01, @customer.wallet)
+  end
+
+  def test_customer_age
+    assert_equal(18, @customer.age)
   end
 end
